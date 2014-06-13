@@ -11,12 +11,13 @@ import org.apache.lucene.util.Version;
 public class ECharacterAnalyser extends Analyzer {
 	private final Version version;
 
-	public ECharacterAnalyser(Version version) {
+	public ECharacterAnalyser(final Version version) {
 		this.version = version;
 	}
 
 	@Override
-	protected TokenStreamComponents createComponents(String field, Reader reader) {
+	protected TokenStreamComponents createComponents(final String field,
+			final Reader reader) {
 		Tokenizer tokenizer = new ECharacterTokenizer(version, reader);
 		TokenStream filter = new LowerCaseFilter(version, tokenizer);
 		return new TokenStreamComponents(tokenizer, filter);

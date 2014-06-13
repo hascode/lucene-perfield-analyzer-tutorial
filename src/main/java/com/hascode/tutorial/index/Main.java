@@ -48,29 +48,36 @@ public class Main {
 				"content",
 				"Oh hai. In teh beginnin Ceiling Cat maded teh skiez An da Urfs, but he did not eated dem.",
 				Store.YES));
-		doc.add(new StringField("email", "kitty@cat.com", Store.YES));
-		doc.add(new StringField("specials", "13e12e22e45e66", Store.YES));
+		doc.add(new TextField("email", "kitty@cat.com", Store.YES));
+		doc.add(new TextField("specials", "13e12exoxoe45e66", Store.YES));
 		writer.addDocument(doc);
 		writer.commit();
 		writer.close();
 
 		int limit = 20;
-		Query query = new TermQuery(new Term("author", "kitty"));
 		try (IndexReader reader = DirectoryReader.open(index)) {
-			IndexSearcher searcher = new IndexSearcher(reader);
-			TopDocs docs = searcher.search(query, limit);
-
-			System.out.println(docs.totalHits + " found for query: " + query);
-
-			for (final ScoreDoc scoreDoc : docs.scoreDocs) {
-				System.out.println(searcher.doc(scoreDoc.doc));
-			}
+			Query query = new TermQuery(new Term("email", "kitty@cat.com"));
+			printSearchResults(limit, query, reader);
+			query = new TermQuery(new Term("specials", "xoxo"));
+			printSearchResults(limit, query, reader);
 		}
 
 		index.close();
 	}
 
-	public static void main(String[] args) throws IOException {
+	private void printSearchResults(final int limit, final Query query,
+			final IndexReader reader) throws IOException {
+		IndexSearcher searcher = new IndexSearcher(reader);
+		TopDocs docs = searcher.search(query, limit);
+
+		System.out.println(docs.totalHits + " found for query: " + query);
+
+		for (final ScoreDoc scoreDoc : docs.scoreDocs) {
+			System.out.println(searcher.doc(scoreDoc.doc));
+		}
+	}
+
+	public static void main(final String[] args) throws IOException {
 		new Main().run();
 	}
 }

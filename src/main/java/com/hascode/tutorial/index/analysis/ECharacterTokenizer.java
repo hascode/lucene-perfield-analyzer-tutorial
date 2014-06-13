@@ -6,13 +6,13 @@ import org.apache.lucene.analysis.util.CharTokenizer;
 import org.apache.lucene.util.Version;
 
 public class ECharacterTokenizer extends CharTokenizer {
-	public ECharacterTokenizer(Version matchVersion, Reader input) {
+	public ECharacterTokenizer(final Version matchVersion, final Reader input) {
 		super(matchVersion, input);
 	}
 
 	@Override
-	protected boolean isTokenChar(int character) {
-		return 'b' == character;
+	protected boolean isTokenChar(final int character) {
+		return 'e' == character;
 	}
 
 }
