@@ -15,6 +15,11 @@ public class ECharacterAnalyser extends Analyzer {
 		this.version = version;
 	}
 
+	// just for luke ;)
+	public ECharacterAnalyser() {
+		version = Version.LUCENE_48;
+	}
+
 	@Override
 	protected TokenStreamComponents createComponents(final String field,
 			final Reader reader) {

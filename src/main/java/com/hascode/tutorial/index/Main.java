@@ -10,7 +10,6 @@ import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field.Store;
-import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -40,14 +39,10 @@ public class Main {
 		PerFieldAnalyzerWrapper analyzer = new PerFieldAnalyzerWrapper(
 				new StandardAnalyzer(version), analyzerPerField);
 		IndexWriterConfig config = new IndexWriterConfig(version, analyzer)
-				.setOpenMode(OpenMode.CREATE_OR_APPEND);
+				.setOpenMode(OpenMode.CREATE);
 		IndexWriter writer = new IndexWriter(index, config);
 		Document doc = new Document();
-		doc.add(new StringField("author", "kitty", Store.YES));
-		doc.add(new TextField(
-				"content",
-				"Oh hai. In teh beginnin Ceiling Cat maded teh skiez An da Urfs, but he did not eated dem.",
-				Store.YES));
+		doc.add(new TextField("author", "kitty cat", Store.YES));
 		doc.add(new TextField("email", "kitty@cat.com", Store.YES));
 		doc.add(new TextField("specials", "13e12exoxoe45e66", Store.YES));
 		writer.addDocument(doc);
@@ -58,7 +53,11 @@ public class Main {
 		try (IndexReader reader = DirectoryReader.open(index)) {
 			Query query = new TermQuery(new Term("email", "kitty@cat.com"));
 			printSearchResults(limit, query, reader);
+
 			query = new TermQuery(new Term("specials", "xoxo"));
+			printSearchResults(limit, query, reader);
+
+			query = new TermQuery(new Term("author", "kitty"));
 			printSearchResults(limit, query, reader);
 		}
 

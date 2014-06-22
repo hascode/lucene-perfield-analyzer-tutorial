@@ -12,7 +12,7 @@ public class ECharacterTokenizer extends CharTokenizer {
 
 	@Override
 	protected boolean isTokenChar(final int character) {
-		return 'e' == character;
+		return 'e' != character;
 	}
 
 }
