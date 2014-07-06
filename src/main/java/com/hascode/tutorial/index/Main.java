@@ -44,6 +44,7 @@ public class Main {
 		Document doc = new Document();
 		doc.add(new TextField("author", "kitty cat", Store.YES));
 		doc.add(new TextField("email", "kitty@cat.com", Store.YES));
+		doc.add(new TextField("email", "kitty2@cat.com", Store.YES));
 		doc.add(new TextField("specials", "13e12exoxoe45e66", Store.YES));
 		writer.addDocument(doc);
 		writer.commit();
